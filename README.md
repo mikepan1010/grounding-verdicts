@@ -81,9 +81,13 @@ probe answers it.
 
 - The exam is one exam, on one codebase, with *n* = 10 per arm. The effect is
   well-evidenced at the outcome level; the exam is not a benchmark.
-- The mechanism is not isolated. The treatment prompt also gained the instruction "read
-  this work spec first", so part of the effect may belong to *having a spec to read*
-  rather than to this particular checklist.
+- **The mechanism is not isolated.** A placebo arm — same prompt, but pointed at a
+  same-shaped spec on an unrelated topic (document formatting) — was run 5 times on one
+  model and came in at 1/5. The three arms line up as 2/5 (nothing) → 1/5 (placebo) → 0/5
+  (this skill), but *n* = 5 separates nothing: Fisher two-tailed *p* = 1.00 against both
+  neighbours. Whether the effect belongs to this checklist's content or merely to *having
+  a spec to read* is still open. The one placebo failure happened to land on rule ①
+  (authority) — a hint, not evidence.
 - One passing deliverable violated rule ③ (its summary and body disagreed on a percentage)
   and still cleared the grading key — evidence that the key checks the "authority" half of
   a verdict more strictly than the "number" half.

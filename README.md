@@ -59,6 +59,56 @@ The skill also carries a list of red-flag sentences ("the numbers look reasonabl
 this time it's right" — plausibility is not verification) and a standing rule that dated
 conclusions in old reports are *hypotheses*, not facts.
 
+## Install
+
+```bash
+git clone https://github.com/mikepan1010/grounding-verdicts \
+  ~/.claude/skills/grounding-verdicts
+```
+
+That is the whole installation. The skill is now available in every project.
+
+## When do I actually use this?
+
+**Mostly you don't have to.** It is a skill, so Claude loads it on its own when the
+`description` matches what you are doing. There is nothing to remember on a normal day.
+
+You type `/grounding-verdicts` yourself in two situations:
+
+1. **You are about to act on the answer** — forward it to a stakeholder, write it into a
+   planning doc, decide whether to start the work.
+2. **The answer already came back and it was suspiciously confident.** Then:
+   `/grounding-verdicts re-check what you just told me`.
+
+### Prompts, side by side
+
+| What you type | Use it? | Why |
+|---|---|---|
+| "Does this backlog item still hold?" | **Yes** | Re-checking a dated conclusion — every control-group error was here |
+| "Is there any staleness guard for 2025?" | **Yes** | A claim of absence; four carriers must be checked |
+| "Which table is authoritative for channel attribution?" | **Yes** | Naming an authority — grep the call sites |
+| "This month says `done`. Is that right?" | **Yes** | A criterion with an exclusion clause |
+| "Does that inventory from July still stand?" | **Yes** | This is literally the exam question |
+| "What was revenue in July?" | No | Data question — one probe answers it |
+| "Did the test suite pass?" | No | Data question |
+| "Reformat this column with thousands separators" | No | Execution, no verdict involved |
+
+### The case that matters most: dispatching a subagent
+
+A subagent does not reliably inherit your skills. This is the one place where saying so
+out loud changes the outcome — put the path in the prompt:
+
+```
+Read this work spec first and follow it: ~/.claude/skills/grounding-verdicts/SKILL.md
+```
+
+That is exactly how the treatment arm below was run.
+
+### One line to remember
+
+Use it when the answer will be **"X holds / X is overturned / X does not exist / the
+authority is Y"**. Skip it when the answer will be **"the number is N"**.
+
 ## Does it work?
 
 Measured, not asserted. Same four-question exam, same codebase, same read-only database,
@@ -91,41 +141,6 @@ probe answers it.
 - One passing deliverable violated rule ③ (its summary and body disagreed on a percentage)
   and still cleared the grading key — evidence that the key checks the "authority" half of
   a verdict more strictly than the "number" half.
-
-## Install
-
-```bash
-git clone https://github.com/mikepan1010/grounding-verdicts \
-  ~/.claude/skills/grounding-verdicts
-```
-
-The skill is then available in every project. Claude loads it automatically when the
-`description` matches what you are doing, or you can invoke it directly with
-`/grounding-verdicts`.
-
-For a subagent, do not rely on automatic loading — put the path in the prompt:
-
-```
-Read this work spec first and follow it: ~/.claude/skills/grounding-verdicts/SKILL.md
-```
-
-## When to reach for it
-
-Use it when the sentence you are about to write is a **criterion** question:
-
-- Re-checking whether an older report, backlog, or inventory still holds.
-- Declaring that something does not exist — no mechanism, no mapping, no record, no caller.
-- Naming an authority: "X is the single source of truth / the join bridge / the definition".
-- Reading a field that carries an exclusion clause or a threshold (`watermark`, `status`,
-  `is_active`, an allowlist).
-- Writing a verdict into something durable: a document, a commit message, a report.
-
-Skip it for **data** questions — how many rows, which date, does the test pass. A single
-probe answers those, and the checklist only slows you down.
-
-The one-line test: *is the sentence I'm about to write a data question or a criterion
-question?* How many, which day, what value — data. Does it count, is it stale, is there
-any, who decides — criterion.
 
 ## The skill file
 
